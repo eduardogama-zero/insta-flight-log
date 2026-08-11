@@ -8,7 +8,7 @@ Transforma o **backup do seu Instagram** num painel de viagens interativo — ma
 
 ### 👉 [**eduardogama-zero.github.io/insta-flight-log**](https://eduardogama-zero.github.io/insta-flight-log/)
 
-Abra o link, **arraste o `.zip`** do seu backup do Instagram e pronto. O processamento acontece **inteiro no seu navegador** — o arquivo não é enviado para servidor nenhum. Zero instalação, funciona no Mac, Windows e celular.
+Abra o link e **arraste o `.zip` — ou a pasta já extraída** do seu backup. O app acha os arquivos certos sozinho. O processamento acontece **inteiro no seu navegador** — o arquivo não é enviado para servidor nenhum. Zero instalação, funciona no Mac, Windows e celular.
 
 > Quer só ver como fica? No site, clique em **"ver demonstração"** (usa um viajante fictício).
 

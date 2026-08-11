@@ -29,37 +29,54 @@ function* iterItems(data){
     yield data; return; }
   if(Array.isArray(data)) yield* data; }
 
-async function extractFromZips(files){
+const isMediaJson = p => /your_instagram_activity\/media\/.*\.json$/i.test(p);
+const isPersonal  = p => /personal_information\/.*\.json$/i.test(p);
+
+// núcleo: recebe "entradas" {path, getText} de zip OU de pasta e extrai os pontos
+async function extract(entries){
   const rows=[]; let handle=null;
-  for(const f of files){
-    const zip=await JSZip.loadAsync(f);
-    const names=Object.keys(zip.files);
-    for(const name of names){
-      if(zip.files[name].dir) continue;
-      // detectar usuário
-      if(!handle && /personal_information\/.*\.json$/i.test(name)){
-        try{ const t=await zip.files[name].async("string");
-          const m=t.match(/"value"\s*:\s*"(@?[A-Za-z0-9._]{2,30})"/);
-          const mm=t.match(/(?:Nome de usu[^"]*|Username)[^{]*?"value"\s*:\s*"([^"]+)"/);
-          if(mm) handle="@"+fixMojibake(mm[1]); } catch(e){}
-      }
-      if(!/your_instagram_activity\/media\/.*\.json$/i.test(name)) continue;
-      let data; try{ data=JSON.parse(await zip.files[name].async("string")); }catch(e){ continue; }
-      const src=name.split("/").pop().replace(".json","");
-      const push=(it,ptitle)=>{ const g=gpsFromItem(it); if(!g) return;
-        const ts=it.creation_timestamp||0; if(!ts) return;
-        rows.push({lat:g[0],lon:g[1],ts,title:fixMojibake(it.title||ptitle||""),source:src}); };
-      for(const e of iterItems(data)){
-        if(e&&Array.isArray(e.media)){ for(const m of e.media) push(m,e.title||""); }
-        else if(e&&typeof e==="object") push(e,e.title||""); }
+  for(const e of entries){
+    const name=e.path;
+    if(!handle && isPersonal(name)){
+      try{ const t=await e.getText();
+        const mm=t.match(/(?:Nome de usu[^"]*|Username)[^{]*?"value"\s*:\s*"([^"]+)"/);
+        if(mm) handle="@"+fixMojibake(mm[1]); }catch(_){}
     }
+    if(!isMediaJson(name)) continue;
+    let data; try{ data=JSON.parse(await e.getText()); }catch(_){ continue; }
+    const src=name.split("/").pop().replace(".json","");
+    const push=(it,pt)=>{ const g=gpsFromItem(it); if(!g) return; const ts=it.creation_timestamp||0; if(!ts) return;
+      rows.push({lat:g[0],lon:g[1],ts,title:fixMojibake(it.title||pt||""),source:src}); };
+    for(const it of iterItems(data)){
+      if(it&&Array.isArray(it.media)){ for(const m of it.media) push(m,it.title||""); }
+      else if(it&&typeof it==="object") push(it,it.title||""); }
   }
-  // dedupe
-  const seen=new Set(), ded=[];
-  for(const r of rows){ const k=r.lat.toFixed(5)+","+r.lon.toFixed(5)+","+r.ts;
-    if(seen.has(k)) continue; seen.add(k); ded.push(r); }
+  const seen=new Set(),ded=[];
+  for(const r of rows){ const k=r.lat.toFixed(5)+","+r.lon.toFixed(5)+","+r.ts; if(seen.has(k))continue; seen.add(k); ded.push(r); }
   ded.sort((a,b)=>a.ts-b.ts);
   return {points:ded, handle};
+}
+async function entriesFromZips(files){
+  const out=[];
+  for(const f of files){ const zip=await JSZip.loadAsync(f);
+    for(const name of Object.keys(zip.files)){ if(zip.files[name].dir) continue;
+      out.push({path:name, getText:()=>zip.files[name].async("string")}); } }
+  return out;
+}
+function entriesFromFiles(fileList){
+  return [...fileList].map(f=>({path:f.webkitRelativePath||f._path||f.name, getText:()=>f.text()}));
+}
+// arrastar uma PASTA: varre a árvore de diretórios
+function readAll(reader){ return new Promise(res=>{ const acc=[];
+  const step=()=>reader.readEntries(es=>{ if(!es.length) return res(acc); acc.push(...es); step(); },()=>res(acc)); step(); }); }
+async function walkEntry(entry,out){
+  if(entry.isFile){ await new Promise(r=>entry.file(f=>{ f._path=entry.fullPath.replace(/^\//,""); out.push(f); r(); },()=>r())); }
+  else if(entry.isDirectory){ for(const e of await readAll(entry.createReader())) await walkEntry(e,out); }
+}
+async function filesFromDrop(dt){
+  const items=[...(dt.items||[])].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
+  if(items.length){ const out=[]; for(const e of items) await walkEntry(e,out); if(out.length) return out; }
+  return [...(dt.files||[])];
 }
 
 // ---------------- cluster (grid single-linkage 30km) ----------------
@@ -215,8 +232,11 @@ async function run(files, handleOverride){
   try{
     await loadData();
     status("lendo o backup…");
-    const {points,handle}=await extractFromZips(files);
-    if(!points.length){ status("⚠️ Nenhuma mídia com GPS encontrada. (O Instagram só grava EXIF em parte das mídias.)"); return; }
+    const list=[...files];
+    const zips=list.filter(f=>/\.zip$/i.test(f.name));
+    const entries = zips.length ? await entriesFromZips(zips) : entriesFromFiles(list);
+    const {points,handle}=await extract(entries);
+    if(!points.length){ status("⚠️ Não achei mídias com GPS aí. Selecione a PASTA do backup (ou o .zip). Lembre: o Instagram só grava GPS em parte das mídias."); return; }
     status(`${points.length} mídias com GPS · agrupando…`);
     await new Promise(r=>setTimeout(r,10));
     let places=cluster(points);
@@ -236,12 +256,17 @@ async function run(files, handleOverride){
 
 // ---------------- UI ----------------
 window.addEventListener("DOMContentLoaded",()=>{
-  const drop=$("#drop"), file=$("#file");
+  const drop=$("#drop"), file=$("#file"), folder=$("#folder");
   drop.addEventListener("click",()=>file.click());
+  const pz=$("#pickZip"), pf=$("#pickFolder");
+  if(pz) pz.addEventListener("click",e=>{e.stopPropagation();file.click();});
+  if(pf) pf.addEventListener("click",e=>{e.stopPropagation();folder.click();});
   file.addEventListener("change",e=>{ if(e.target.files.length) run([...e.target.files]); });
+  if(folder) folder.addEventListener("change",e=>{ if(e.target.files.length) run([...e.target.files]); });
   ["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over");}));
-  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over");}));
-  drop.addEventListener("drop",e=>{ const f=[...e.dataTransfer.files].filter(x=>x.name.endsWith(".zip")); if(f.length) run(f); });
+  drop.addEventListener("dragleave",e=>{e.preventDefault();drop.classList.remove("over");});
+  drop.addEventListener("drop",async e=>{ e.preventDefault();drop.classList.remove("over");
+    status("lendo pasta…"); const files=await filesFromDrop(e.dataTransfer); if(files.length) run(files); });
   $("#genCards").addEventListener("click",()=>generateCards(window.__D));
   $("#cardsClose").addEventListener("click",()=>$("#cardsModal").style.display="none");
   $("#cardsAll").addEventListener("click",downloadAllCards);
