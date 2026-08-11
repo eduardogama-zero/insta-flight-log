@@ -228,7 +228,9 @@ async function run(files, handleOverride){
     D.handle=handleOverride||handle||"MEU MAPA";
     $("#uploader").style.display="none";
     $("#app").style.display="flex";
+    window.__D=D;
     boot(D);
+    $("#genCards").style.display="block";
   }catch(e){ console.error(e); status("❌ Erro: "+e.message); }
 }
 
@@ -240,6 +242,9 @@ window.addEventListener("DOMContentLoaded",()=>{
   ["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over");}));
   ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over");}));
   drop.addEventListener("drop",e=>{ const f=[...e.dataTransfer.files].filter(x=>x.name.endsWith(".zip")); if(f.length) run(f); });
+  $("#genCards").addEventListener("click",()=>generateCards(window.__D));
+  $("#cardsClose").addEventListener("click",()=>$("#cardsModal").style.display="none");
+  $("#cardsAll").addEventListener("click",downloadAllCards);
   const dl=$("#demoLink");
   if(dl) dl.addEventListener("click",async e=>{ e.preventDefault();
     status("carregando demonstração…");

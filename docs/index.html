@@ -94,6 +94,18 @@ h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:21px;letter-spaci
 #uploader .muted{color:#5f7d78;font-size:11.5px;margin-top:14px}
 #uploader a{color:#57d7ff;text-decoration:none}#uploader a:hover{text-decoration:underline}
 #app{display:none}
+
+#genCards{position:fixed;right:18px;bottom:18px;z-index:800;display:none;background:linear-gradient(180deg,#ffc766,#f0a838);color:#0a0d0c;border:none;border-radius:10px;font-family:'Share Tech Mono',monospace;font-weight:700;font-size:14px;letter-spacing:.06em;padding:12px 18px;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+#genCards:hover{box-shadow:0 0 20px rgba(255,179,64,.6)}
+#cardsModal{position:fixed;inset:0;z-index:1200;display:none;flex-direction:column;background:rgba(2,4,6,.94);backdrop-filter:blur(6px)}
+.cBar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #1c2e29;color:#d9e6e2;font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:.06em}
+.cBar button{margin-left:8px;background:#0b1216;border:1px solid #1c2e29;color:#d9e6e2;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:13px;padding:9px 14px;cursor:pointer}
+.cBar #cardsAll{background:linear-gradient(180deg,#ffc766,#f0a838);color:#0a0d0c;border:none;font-weight:700}
+#cardsGallery{flex:1;display:flex;gap:18px;overflow:auto;padding:22px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.cItem{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cImg{width:230px;height:auto;border-radius:12px;border:1px solid #1c2e29;box-shadow:0 6px 22px rgba(0,0,0,.6)}
+.cDl{background:#0b1216;border:1px solid #1c2e29;color:#3ff0a8;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:12px;padding:8px 12px;cursor:pointer}
+.cLoading{color:#ffb340;font-family:'Share Tech Mono',monospace;padding:40px}
 </style></head><body>
 
 <div id="uploader"><div class="card">
@@ -149,9 +161,16 @@ h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:21px;letter-spaci
  </div>
 </div>
 
+<button id="genCards">&#128248; Gerar cards</button>
+<div id="cardsModal">
+  <div class="cBar"><span>Cards para story/reel &middot; 1080&times;1920</span>
+    <div><button id="cardsAll">Baixar todos</button><button id="cardsClose">Fechar</button></div></div>
+  <div id="cardsGallery"></div>
+</div>
 <script src="vendor/leaflet.js"></script>
 <script src="vendor/leaflet-heat.js"></script>
 <script src="vendor/jszip.min.js"></script>
 <script src="dashboard.js"></script>
+<script src="cards.js"></script>
 <script src="app.js"></script>
 </body></html>
