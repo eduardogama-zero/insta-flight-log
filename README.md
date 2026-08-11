@@ -4,6 +4,14 @@ Transforma o **backup do seu Instagram** num painel de viagens interativo — ma
 
 **100% local. Nada sai da sua máquina.** Sem nuvem, sem API paga, **sem LLM**. É um parser determinístico: o export do Instagram é JSON estruturado e as fotos/vídeos carregam GPS no EXIF — só precisamos ler.
 
+## ▶️ Use direto no navegador — sem instalar nada
+
+### 👉 [**eduardogama-zero.github.io/insta-travel-map**](https://eduardogama-zero.github.io/insta-travel-map/)
+
+Abra o link, **arraste o `.zip`** do seu backup do Instagram e pronto. O processamento acontece **inteiro no seu navegador** — o arquivo não é enviado para servidor nenhum. Zero instalação, funciona no Mac, Windows e celular.
+
+> Quer só ver como fica? No site, clique em **"ver demonstração"** (usa um viajante fictício).
+
 ![Mapa de rotas](docs/screenshot-rotas.png)
 
 <p align="center">
@@ -13,9 +21,13 @@ Transforma o **backup do seu Instagram** num painel de viagens interativo — ma
 
 > As imagens acima usam um **viajante fictício** que acompanha o projeto (`sample-export/`). Rode `python instatravel.py sample-export` para ver esse mesmo painel na sua máquina.
 
-## 👉 Nunca usou terminal? Comece pelo [GUIA passo a passo](GUIA.md)
+## Como pegar seu backup do Instagram
 
-O [**GUIA.md**](GUIA.md) explica, sem pressupor conhecimento técnico, como pedir o backup ao Instagram, instalar o necessário e gerar o painel.
+Instagram → **Configurações → Central de Contas → Suas informações e permissões → Baixar suas informações** → peça em **formato JSON**, período **Desde o início**. Você recebe um ou vários `.zip` por e-mail. O passo a passo detalhado (com telas) está no [**GUIA.md**](GUIA.md).
+
+---
+
+> A partir daqui é a **versão linha de comando (Python)** — opcional, para quem prefere terminal ou quer automatizar. Para uso normal, use o site acima.
 
 ## Como funciona
 
