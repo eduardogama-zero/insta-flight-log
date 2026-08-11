@@ -46,13 +46,13 @@ Copie e cole **um comando de cada vez** na janela que você abriu, apertando Ent
 
 Baixar a ferramenta:
 ```bash
-git clone https://github.com/eduardogama-zero/insta-travel-map.git
+git clone https://github.com/eduardogama-zero/insta-flight-log.git
 ```
 > Se disser que `git` não existe: no Mac, digite `git` e o sistema oferece instalar; no Windows, instale de [git-scm.com](https://git-scm.com/download/win). Alternativa sem git: no GitHub, botão verde **Code → Download ZIP**, e descompacte.
 
 Entrar na pasta:
 ```bash
-cd insta-travel-map
+cd insta-flight-log
 ```
 
 Criar um "ambiente" isolado e instalar a dependência:

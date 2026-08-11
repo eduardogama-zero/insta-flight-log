@@ -1,4 +1,4 @@
-# insta-travel-map ✈️
+# Insta Flight Log ✈️
 
 Transforma o **backup do seu Instagram** num painel de viagens interativo — mapa de rotas de voo, mapa de calor, linha do tempo, estatísticas (países, cidades, horas de voo, km, custo estimado) e uma lista de viagens reconstruídas.
 
@@ -6,7 +6,7 @@ Transforma o **backup do seu Instagram** num painel de viagens interativo — ma
 
 ## ▶️ Use direto no navegador — sem instalar nada
 
-### 👉 [**eduardogama-zero.github.io/insta-travel-map**](https://eduardogama-zero.github.io/insta-travel-map/)
+### 👉 [**eduardogama-zero.github.io/insta-flight-log**](https://eduardogama-zero.github.io/insta-flight-log/)
 
 Abra o link, **arraste o `.zip`** do seu backup do Instagram e pronto. O processamento acontece **inteiro no seu navegador** — o arquivo não é enviado para servidor nenhum. Zero instalação, funciona no Mac, Windows e celular.
 
@@ -46,8 +46,8 @@ O Instagram grava, em parte das mídias, a coordenada GPS no EXIF (`your_instagr
 Precisa de **Python 3.8+**.
 
 ```bash
-git clone https://github.com/eduardogama-zero/insta-travel-map.git
-cd insta-travel-map
+git clone https://github.com/eduardogama-zero/insta-flight-log.git
+cd insta-flight-log
 pip install -r requirements.txt
 ```
 

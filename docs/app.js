@@ -1,4 +1,4 @@
-/* insta-travel-map — pipeline no navegador (sem servidor, sem instalação).
+/* insta-flight-log — pipeline no navegador (sem servidor, sem instalação).
    Porta a lógica do CLI Python para JS. Nada sai do navegador. */
 const ARGS = { currency:"R$", rate_dom:0.65, rate_intl:0.42, rate_intl_exec:1.40, exec_legs:0, trip_gap:21 };
 let CITIES=null, CC2=null;

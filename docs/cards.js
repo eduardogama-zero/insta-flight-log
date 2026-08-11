@@ -21,14 +21,14 @@ function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,
 function T(c,t,x,y,font,color,align="left"){c.font=font;c.fillStyle=color;c.textAlign=align;c.fillText(t,x,y);}
 
 function header(c,handle){
-  T(c,"✈  FLIGHT LOG",60,90,'700 34px Orbitron, sans-serif',CL.amber,"left");
+  T(c,"✈  INSTA FLIGHT LOG",60,90,'700 34px Orbitron, sans-serif',CL.amber,"left");
   T(c,handle||"",CARD_W-60,90,'26px "Share Tech Mono", monospace',CL.mut,"right");
   c.strokeStyle=CL.line;c.lineWidth=2;c.beginPath();c.moveTo(60,120);c.lineTo(CARD_W-60,120);c.stroke();
 }
 function footer(c){
   c.strokeStyle=CL.line;c.lineWidth=2;c.beginPath();c.moveTo(60,CARD_H-90);c.lineTo(CARD_W-60,CARD_H-90);c.stroke();
-  T(c,"gerado com insta-travel-map",60,CARD_H-52,'22px "Share Tech Mono", monospace',CL.mut,"left");
-  T(c,"eduardogama-zero.github.io/insta-travel-map",CARD_W-60,CARD_H-52,'22px "Share Tech Mono", monospace',CL.cyan,"right");
+  T(c,"gerado com Insta Flight Log",60,CARD_H-52,'22px "Share Tech Mono", monospace',CL.mut,"left");
+  T(c,"eduardogama-zero.github.io/insta-flight-log",CARD_W-60,CARD_H-52,'22px "Share Tech Mono", monospace',CL.cyan,"right");
 }
 function bg(c){c.fillStyle=CL.bg;c.fillRect(0,0,CARD_W,CARD_H);
   const g=c.createRadialGradient(CARD_W/2,CARD_H*0.35,200,CARD_W/2,CARD_H/2,CARD_H*0.75);
@@ -46,7 +46,7 @@ function cardResumo(c,D){
   bg(c);header(c,D.handle);
   const cu=D.cum[D.ymax];
   c.save();c.shadowColor="rgba(87,215,255,.25)";c.shadowBlur=24;
-  T(c,"FLIGHT LOG",60,300,'900 120px Orbitron, sans-serif',CL.ink,"left");c.restore();
+  T(c,"INSTA FLIGHT LOG",60,300,'900 72px Orbitron, sans-serif',CL.ink,"left");c.restore();
   T(c,"MEU MAPA DE VIAGENS",62,360,'30px "Share Tech Mono", monospace',CL.green,"left");
   T(c,`PERÍODO ${D.first?D.first.slice(0,4):D.ymin}–${D.ymax}`,62,410,'26px "Share Tech Mono", monospace',CL.mut,"left");
   const x0=60,w=(CARD_W-120-30)/2,h=250,gap=30,y0=480;
