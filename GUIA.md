@@ -10,8 +10,9 @@ Este guia leva você do zero até o seu painel de viagens pronto. Não precisa s
 
 O Instagram guarda a localização (GPS) de parte das suas fotos e vídeos. A gente só precisa desse arquivo.
 
-1. Abra o **Instagram** (app ou site).
-2. Vá em **Configurações** → **Central de Contas** → **Suas informações e permissões** → **Baixar suas informações**.
+1. Abra a **Central de Contas** direto neste link: **https://accountscenter.instagram.com/** (faça login se pedir).
+2. Vá em **Suas informações e permissões** → **Baixar suas informações**.
+   > Pelo app dá no mesmo: **Configurações → Central de Contas → Suas informações e permissões → Baixar suas informações**.
 3. Toque em **Solicitar download** → escolha sua conta.
 4. Em **Tipo de informações**, pode deixar tudo (ou marcar só **Conteúdo** → *Fotos, vídeos e stories* — é o que importa).
 5. Configurações importantes:

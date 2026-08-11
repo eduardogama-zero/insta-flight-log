@@ -23,7 +23,7 @@ Abra o link, **arraste o `.zip`** do seu backup do Instagram e pronto. O process
 
 ## Como pegar seu backup do Instagram
 
-Instagram → **Configurações → Central de Contas → Suas informações e permissões → Baixar suas informações** → peça em **formato JSON**, período **Desde o início**. Você recebe um ou vários `.zip` por e-mail. O passo a passo detalhado (com telas) está no [**GUIA.md**](GUIA.md).
+Acesse **[accountscenter.instagram.com](https://accountscenter.instagram.com/)** → **Suas informações e permissões → Baixar suas informações** → peça em **formato JSON**, período **Desde o início**. Você recebe um ou vários `.zip` por e-mail. O passo a passo detalhado está no [**GUIA.md**](GUIA.md).
 
 ---
 
