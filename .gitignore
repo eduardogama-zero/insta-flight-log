@@ -7,3 +7,4 @@ manual_entries.json
 .DS_Store
 .venv/
 venv/
+docs/demo.html

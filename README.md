@@ -4,7 +4,18 @@ Transforma o **backup do seu Instagram** num painel de viagens interativo — ma
 
 **100% local. Nada sai da sua máquina.** Sem nuvem, sem API paga, **sem LLM**. É um parser determinístico: o export do Instagram é JSON estruturado e as fotos/vídeos carregam GPS no EXIF — só precisamos ler.
 
-> Painel gerado 100% a partir do seu backup — mapa de rotas, mapa de calor, timeline com replay e estatísticas.
+![Mapa de rotas](docs/screenshot-rotas.png)
+
+<p align="center">
+  <img src="docs/screenshot-calor.png" width="49%" alt="Mapa de calor">
+  <img src="docs/screenshot-records.png" width="49%" alt="Records e estatísticas">
+</p>
+
+> As imagens acima usam um **viajante fictício** que acompanha o projeto (`sample-export/`). Rode `python instatravel.py sample-export` para ver esse mesmo painel na sua máquina.
+
+## 👉 Nunca usou terminal? Comece pelo [GUIA passo a passo](GUIA.md)
+
+O [**GUIA.md**](GUIA.md) explica, sem pressupor conhecimento técnico, como pedir o backup ao Instagram, instalar o necessário e gerar o painel.
 
 ## Como funciona
 
