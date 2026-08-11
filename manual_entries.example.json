@@ -1,0 +1,20 @@
+{
+  "_meta": "Viagens que NÃO geraram mídia com GPS no export (memória, legendas, etc.). Copie para manual_entries.json ao lado do HTML de saída e edite. Cada entrada entra nos totais sem marcação visual no mapa.",
+  "entries": [
+    {
+      "id": "exemplo-india-2018",
+      "label": "Nova Delhi, Índia",
+      "city": "Nova Delhi",
+      "country": "Índia",
+      "cc": "IN",
+      "lat": 28.6139,
+      "lon": 77.2090,
+      "first": "2018-05-01",
+      "last": "2018-05-01",
+      "origin": [-23.55, -46.63],
+      "origin_name": "São Paulo",
+      "roundtrip": true,
+      "source": "memória — viagem sem post geotagueado"
+    }
+  ]
+}

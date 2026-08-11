@@ -1,0 +1,2 @@
+# Geocoding offline (cidade/estado/país a partir de coordenadas). ~40MB de dados embutidos.
+reverse_geocoder>=1.5.1
